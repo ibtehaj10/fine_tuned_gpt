@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+  <title>OpenAI Quickstart</title>
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='logo.png') }}"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+<style>
+  img .icon{
+    width: 250px;
+    height: 200px;
+  }
+  input[type='submit']{
+    background-color: orange;
+  }
+  .box{
+    border: 2px solid orange;
+    padding: 5%;
+    border-radius:0 50px 50px 50px ;
+    background-color: white;
+    max-width: 500px;
+    /* box-shadow: 5xp 5xp 5xp 5xp white; */
+  }
+  body{
+    background-color: orange;
+  }
+  .box p{
+    color: orange;
+  }
+</style>
+<body>
+  <div class="box">
+    <center>
+  <img src="{{ url_for('static', filename='logo.png') }}"  />
+  <h3>Talk to GPT-3</h3>
+  <form action="/" method="post">
+    <input type="text" name="animal" placeholder="Enter your text" required />
+    <input type="submit" value="Send! 📩" />
+  </form>
+  {% if result %}
+  <div class="result">{{ result }}</div>
+  <p><b>Powered by Proxima AI Company</b> </p>
+  <p>www.proxima.pk</p>
+  {% endif %}
+</center>
+</div>
+</body>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practice CHATBOT</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="../static/style.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/style.css">
+
+<!-- jQuery library -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script> -->
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+<div id="container">
+   
+<!-- <body background="../static/img/hat.jpg"> -->
+   
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+          <center>
+   
+            <button id="recBtn" onclick="toggleRecording()"><img src="../static/microphone.png"></button>
+          <br>
+          
+          
+          <audio id="audioPlayer" controls style="width: 200px;">
+            <source id="audioSource" src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+           </center>
+          
+    </nav>
+    <main>
+    <!-- Page Content  -->
+    <div id="content">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse"  class="btn btn-dark ">
+                    <i class="navbar-toggler-icon "></i>
+                    <span></span>
+                </button>
+                
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                   
+                </div>
+            </div>
+        </nav>
+    </div>
+        
+
+
+<header>
+  <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""> -->
+  <div>
+      <!-- <h2 style="color: white;">Chat with  GPT</h2> -->
+      <!-- <h3>already  len messages</h3> -->
+  </div>
+  <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt=""> -->
+  <div style="  margin-top: -29px;">
+      <p style="color: rgb(34, 34, 34);z-index: 5;text-align: left;  ">  </p>
+      <p style="color: rgb(61, 61, 61);z-index: 5;text-align: left;  ">  </p>
+      <!-- <p style="color: rgb(63, 63, 63);z-index: 5;text-align: left;  ">  test</p> -->
+  </div>
+</header>
+
+<ul id="chat">
+
+  
+  <li class="me">
+    <div class="msg msg-left" id="chatbox">
+      <center>
+      <div class="bubble"id = "demos">
+        <!-- <p class="bottext">  </p> -->
+          
+       
+      </div>
+    </center>
+    </div>
+  </li>
+ 
+ 
+  
+   </ul>
+
+  <footer>
+
+    <div class="type-area">
+      <div  id="userInput">
+        <center>
+          <!-- <button id="recBtn" onclick="toggleRecording()"><img  class="icon"src="https://img.icons8.com/material-two-tone/24/000000/microphone--v1.png"/></button> -->
+          <input type="text" class="typing"  name="msg" id="textInput" placeholder="Type Here...">
+          <span class="send">
+            
+            <!-- <i class="fa fa-paper-plane" id='buttonInput' style="padding-top: 10px;color: green;"></i> -->
+          </span>
+        </center>
+   
+    </div>
+  </div>
+  
+  </footer>
+
+</main>
+</div>
+</div>
+
+  <script>
+var i = 0;
+// var txt = 'Lorem ipsum typing effect!'; /* The text */
+var speed = 50; /* The speed/duration of the effect in milliseconds */
+
+
+
+
+
+document.getElementById("textInput").onclick = function() {myFunction()};
+
+function myFunction() {
+  document.getElementById("textInput").style.borderColor = 'green';
+}
+
+
+        function gotbotresponse(){
+            var rawtext = $('#textInput').val();
+            var userHtml = '<div class="box1"><img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" id="avatar"><P class = "usertext" id="scroll" ><span>' + rawtext +'</span></p></div>';
+              // window.alert(rawtext)
+            $('#textInput').val("");
+            $('#chatbox  .bubble').append(userHtml);
+           
+            $.get("/get" , { msg : rawtext }).done(function(data){
+                
+                var botHtml = '<div class="box2" id="box2"><img src="/static/logo.jpg" id="avatar2"><P class ="bottext" id="scroll2"><span></span>  </p></div>';
+                $('#chatbox  .bubble').append(botHtml);
+
+                let names =document.getElementsByClassName('bottext');
+                let last = names[names.length-1];
+                last.scrollIntoView({block:'start'})
+                var i = 0;
+                var speed = 30; /* The speed/duration of the effect in milliseconds */
+                var x = document.getElementById("demos");
+                function typeWriter() {
+                  if (i < data.length) {
+                    x.querySelector(".box2:nth-last-child(1) .bottext:nth-last-child(1) span").innerHTML += data.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                  }
+                }
+                typeWriter()
+                
+                
+               
+                 
+                    
+            });
+}
+        $('#textInput').keypress(function(e){
+                if(e.which == 13){
+                    
+                    gotbotresponse();
+                    let names = document.getElementsByClassName('usertext');
+                    let last = names[names.length-1];
+                    last.scrollIntoView({block:'start'})
+                }
+
+            });
+            $('#buttonInput').click(function(){
+                gotbotresponse();
+                
+
+            });
+   
+    const d = new Date();
+    // document.getElementById("demo").innerHTML = d.getHours() +':'+ d.getMinutes() +':'+d.getSeconds();
+ 
+  
+
+  
+  var recognition = new webkitSpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  var isRecording = false;
+  var transcribing = false;
+  var transcript = "";
+  
+  function toggleRecording() {
+      if (!isRecording) {
+          recognition.start();
+          document.getElementById("recBtn").innerHTML = '<img src="../static/mic.png">';
+          isRecording = true;
+          transcribing = true;
+      } else {
+          recognition.stop();
+          document.getElementById("recBtn").innerHTML = '<img src="../static/microphone.png">';
+          isRecording = false;
+      }
+  }
+  
+  function playAudio(audioFile) {
+      var audioPlayer = document.getElementById("audioPlayer");
+      var audioSource = document.getElementById("audioSource");
+      audioSource.src = audioFile;
+      audioPlayer.load();
+      audioPlayer.play();
+  }
+  
+  recognition.onresult = function(event) {
+      if (event.results[event.results.length-1].isFinal) {
+          transcript = event.results[event.results.length-1][0].transcript;
+      }
+  };
+  
+  recognition.onend = function() {
+      if(transcribing){
+          console.log(transcript);
+          // Send transcript to Flask backend
+          fetch('https://trstd.knovatek.ca/transcript', {
+              method: 'POST',
+              body: JSON.stringify({'transcript': transcript}),
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          })
+          .then(response => response.json())
+          .then(data => playAudio('/audio/'+data.audio_file+'?t='+new Date().getTime()))
+  
+  
+      }
+      transcribing = false;
+      transcript = "";
+  };
+  $(document).ready(function () {
+          $('#sidebarCollapse').on('click', function () {
+              $('#sidebar').toggleClass('active');
+          });
+      });
+  </script>
+  </body>
+</html>

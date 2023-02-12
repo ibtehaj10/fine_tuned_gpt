@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <p id="b" >asd</p>
+  <p id="b" >asd</p>
+  <p id="b" >asd</p>
+  <p id="b" >asd</p>
+  <div id="myDIV">
+    Three links inside div:
+    <div id="box2">
+    <a href="https://www.w3schools.com" class="an">w3schools.com <span></span></a>
+    <!-- <a href="http://www.disney.com" target="_blank" class="an">disney.com</a>
+    <a href="http://www.wikipedia.org" target="_top" class="an">wikipedia.org</a> -->
+  </div>
+</div>
+  <script>
+var a = 0
+
+var mytxt = "scroll"
+var total = a.toString() + mytxt
+// window.alert(total)
+var i = 0;
+var txt = 'Lorem ipsum typing effect!'; /* The text */
+var speed = 50; /* The speed/duration of the effect in milliseconds */
+var x = document.getElementById("myDIV");
+
+function typeWriter() {
+  if (i < txt.length) {
+    x.querySelector("#box2 .an:nth-last-child(1) span").innerHTML += txt.charAt(i);
+    
+    i++;
+    setTimeout(typeWriter, speed);
+    var a =+ 1
+    
+    
+
+  }
+}
+// window.alert(total)
+typeWriter()
+  </script>
+</body>
+</html>
